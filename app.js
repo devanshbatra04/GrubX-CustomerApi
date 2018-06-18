@@ -88,7 +88,7 @@ app.post('/api/cart', checkCart, (req, res) => {
         Product.findOne({product_id: product}).then(prod => {
             Cart.addToCart(prod, qty);
             Cart.saveCart(req);
-            res.redirect('/cart');
+            res.redirect('/api/cart');
         }).catch(err => {
             console.log(err);
             res.redirect('/');
