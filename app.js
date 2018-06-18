@@ -4,6 +4,8 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const Security = require('./lib/security');
 const assignCart = require('./lib/assigncart');
 const cart = require('./lib/cart');
+const Product = require('./models/products');
+const mongoose = require('mongoose');
 //...
 let Cart;
 
@@ -12,7 +14,7 @@ const store = new MongoDBStore({
     collection: 'sessions'
 });
 
-
+mongoose.connect("mongodb://don123:don123@ds163700.mlab.com:63700/grubx");
 
 
 app.use(session({
@@ -64,8 +66,17 @@ app.get('/chillyPotato', (req, res)=> {
     res.send("product added");
     console.log(Cart);
 });
+app.get('/items', (req, res) => {
+    console.log("I am here");
+    Product.find({}, function(err, items){
+        if (err) console.log(err) ;
+        else {
+            res.send(items);
+        }
+    });
 
 
+});
 
 app.listen(3000, function () {
     console.log('Ecommerce sample listening on port 3000!');

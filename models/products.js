@@ -6,10 +6,9 @@ let Schema  = mongoose.Schema;
 
 let ProductsSchema = new Schema({
         product_id: Number,
-        id: String,
         title: String,
         description: String,
         price: Number},
-    {collection: 'products'});
+    {collection: 'allProducts'});
 
-module.exports = mongoose.model('Products', ProductsSchema);
+module.exports = mongoose.model("Model", ProductsSchema, "allProducts");
