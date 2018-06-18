@@ -45,14 +45,15 @@ app.get('/', checkCart, function(req, res) {
 
 });
 
-app.post('/test', (req, res) => {
-    let token = req.body.nonce;
-    if(Security.isValidNonce(token, req)) {
-        // OK
-    } else {
-        // Reject the request
-    }
-});
+// app.post('/test', (req, res) => {
+//     let token = req.body.nonce;
+//     if(Security.isValidNonce(token, req)) {
+//         console.log("hmm?");
+//         // OK
+//     } else {
+//         // Reject the request
+//     }
+// });
 
 app.get('/chillyPotato', (req, res)=> {
     let product = {
@@ -78,6 +79,27 @@ app.get('/api/items', (req, res) => {
 
 });
 
+app.post('/api/cart', (req, res) => {
+    let qty = parseInt(req.body.qty, 10);
+    let product = parseInt(req.body.product_id, 10);
+    if(qty > 0) {
+        Product.findOne({product_id: product}).then(prod => {
+            Cart.addToCart(prod, qty);
+            Cart.saveCart(req);
+            res.redirect('/cart');
+        }).catch(err => {
+            res.redirect('/');
+        });
+    }
+    else {
+        res.redirect('/');
+    }
+});
+
+app.get('/api/cart', (req, res)=> {
+    res.send(Cart.data);
+
+});
 app.listen(3000, function () {
     console.log('Ecommerce sample listening on port 3000!');
 });
