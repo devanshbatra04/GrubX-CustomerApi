@@ -103,6 +103,13 @@ app.get('/api/cart', checkCart, (req, res)=> {
     res.send(Cart.data);
 
 });
+
+app.post('/api/cart/remove', checkCart, (req, res)=> {
+    let product = parseInt(req.body.product_id, 10);
+    Cart.removeFromCart(product);
+    res.redirect('/api/cart');
+});
+
 app.listen(3000, function () {
     console.log('Ecommerce sample listening on port 3000!');
 });
