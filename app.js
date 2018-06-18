@@ -15,6 +15,8 @@ const store = new MongoDBStore({
 });
 
 mongoose.connect("mongodb://don123:don123@ds163700.mlab.com:63700/grubx");
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended: true}));
 
 
 app.use(session({
