@@ -19,7 +19,15 @@ app.use(session({
     name: 'CartCheck',
 }));
 
-app.get('/', function(req, res) {
+let checkCart = function (req,res,next){
+    if (!req.session.cart) {
+        req.session.cart = require('./lib/cart');
+    }
+    next();
+};
+app.use(checkCart);
+
+app.get('/', checkCart, function(req, res) {
     console.log(req.session);
     if (!req.session.cart) {
         req.session.cart = require('./lib/cart');
@@ -40,6 +48,8 @@ app.post('/test', (req, res) => {
         // Reject the request
     }
 });
+
+
 
 app.listen(3000, function () {
     console.log('Ecommerce sample listening on port 3000!');
