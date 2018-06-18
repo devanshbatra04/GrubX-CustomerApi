@@ -17,10 +17,12 @@ app.use(session({
 }));
 
 app.get('/', function(req, res) {
+    console.log(req.session);
     if(!req.session.test) {
         req.session.test = 'OK';
         res.send('OK');
     }
+    else res.send('still OK');
 });
 
 
