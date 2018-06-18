@@ -66,7 +66,7 @@ app.get('/chillyPotato', (req, res)=> {
     res.send("product added");
     console.log(Cart);
 });
-app.get('/items', (req, res) => {
+app.get('/itemsAPI', (req, res) => {
     console.log("I am here");
     Product.find({}, function(err, items){
         if (err) console.log(err) ;
