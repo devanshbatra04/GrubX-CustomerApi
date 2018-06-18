@@ -1,6 +1,9 @@
 const app = require('express')();
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const Security = require('./lib/security');
+//...
+
 
 const store = new MongoDBStore({
     uri: 'mongodb://localhost:27017/grubx',
@@ -25,6 +28,14 @@ app.get('/', function(req, res) {
     else res.send('still OK');
 });
 
+app.post('/test', (req, res) => {
+    let token = req.body.nonce;
+    if(Security.isValidNonce(token, req)) {
+        // OK
+    } else {
+        // Reject the request
+    }
+});
 
 app.listen(3000, function () {
     console.log('Ecommerce sample listening on port 3000!');
