@@ -8,7 +8,7 @@ const cart = require('./lib/cart');
 let Cart;
 
 const store = new MongoDBStore({
-    uri: 'mongodb://localhost:27017/grubx',
+    uri: "mongodb://don123:don123@ds163700.mlab.com:63700/grubx",
     collection: 'sessions'
 });
 
