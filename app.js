@@ -36,7 +36,6 @@ let checkCart = function (req,res,next){
     }
     Cart = req.session.cart;
     if (!Cart.addToCart) assignCart(Cart);
-    console.log(Cart);
     next();
 };
 app.use(checkCart);
@@ -65,11 +64,9 @@ app.get('/chillyPotato', checkCart, (req, res)=> {
         title : "ChillyPotato",
         price : 40,
     };
-    console.log(Cart);
 
     Cart.addToCart(product, 1);
     res.send("product added");
-    console.log(Cart);
 });
 app.get('/api/items', (req, res) => {
     console.log("I am here");
@@ -87,11 +84,13 @@ app.post('/api/cart', checkCart, (req, res) => {
     let qty = parseInt(req.body.qty, 10);
     let product = parseInt(req.body.product_id, 10);
     if(qty > 0) {
+        console.log(Cart);
         Product.findOne({product_id: product}).then(prod => {
             Cart.addToCart(prod, qty);
             Cart.saveCart(req);
             res.redirect('/cart');
         }).catch(err => {
+            console.log(err);
             res.redirect('/');
         });
     }
