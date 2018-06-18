@@ -2,6 +2,7 @@ const app = require('express')();
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const Security = require('./lib/security');
+const assignCart = require('./lib/assigncart');
 const cart = require('./lib/cart');
 //...
 let Cart;
@@ -10,40 +11,7 @@ const store = new MongoDBStore({
     uri: 'mongodb://localhost:27017/grubx',
     collection: 'sessions'
 });
-function assignCart(Cart){
-    Cart.addToCart = function (product = null, qty = 1) {
-        if(!this.inCart(product.product_id)) {
-            let prod = {
-                id: product.product_id,
-                title: product.title,
-                price: product.price,
-                qty: qty,
-            };
-            this.data.items.push(prod);
-            this.calculateTotals();
-        }
-    };
-    Cart.inCart = function(productID = 0) {
-        let found = false;
-        this.data.items.forEach(item => {
-            if(item.id === productID) {
-                found = true;
-            }
-        });
-        return found;
-    };
-    Cart.calculateTotals = function() {
-        this.data.totals = 0;
-        this.data.items.forEach(item => {
-            let price = item.price;
-            let qty = item.qty;
-            let amount = price * qty;
 
-            this.data.totals += amount;
-        });
-    }
-
-}
 
 
 
