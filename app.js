@@ -5,6 +5,14 @@ const store = new MongoDBStore({
     collection: 'sessions'
 });
 
+app.use(session({
+    secret: 'Dis ish Secretish',
+    resave: false,
+    saveUninitialized: true,
+    store: store,
+    unset: 'destroy',
+    name: 'session cookie name'
+}));
 
 
 app.listen(3000, function () {
