@@ -9,9 +9,7 @@ let ProductsSchema = new Schema({
         id: String,
         title: String,
         description: String,
-        manufacturer: String,
-        price: Number,
-        image: String},
+        price: Number},
     {collection: 'products'});
 
 module.exports = mongoose.model('Products', ProductsSchema);
