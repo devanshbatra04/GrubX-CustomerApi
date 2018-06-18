@@ -1,11 +1,11 @@
-const app = require('express')();
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const Security = require('./lib/security');
-const assignCart = require('./lib/assigncart');
-const cart = require('./lib/cart');
-const Product = require('./models/products');
-const mongoose = require('mongoose');
+const app           = require('express')();
+const session       = require('express-session');
+const MongoDBStore  = require('connect-mongodb-session')(session);
+const Security      = require('./lib/security');
+const assignCart    = require('./lib/assigncart');
+const cart          = require('./lib/cart');
+const Product       = require('./models/products');
+const mongoose      = require('mongoose');
 //...
 let Cart;
 
