@@ -1,5 +1,7 @@
 const app = require('express')();
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
 const store = new MongoDBStore({
     uri: 'mongodb://localhost:27017/grubx',
     collection: 'sessions'
@@ -13,6 +15,13 @@ app.use(session({
     unset: 'destroy',
     name: 'session cookie name'
 }));
+
+app.get('/', function(req, res) {
+    if(!req.session.test) {
+        req.session.test = 'OK';
+        res.send('OK');
+    }
+});
 
 
 app.listen(3000, function () {
