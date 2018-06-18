@@ -110,6 +110,11 @@ app.post('/api/cart/remove', checkCart, (req, res)=> {
     res.redirect('/api/cart');
 });
 
+app.post('/api/cart/empty', checkCart, (req, res)=> {
+    Cart.emptyCart(req);
+    res.redirect('/api/cart');
+});
+
 app.listen(3000, function () {
     console.log('Ecommerce sample listening on port 3000!');
 });
