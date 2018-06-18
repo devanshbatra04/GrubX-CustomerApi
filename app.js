@@ -6,6 +6,8 @@ const assignCart    = require('./lib/assigncart');
 const cart          = require('./lib/cart');
 const Product       = require('./models/products');
 const mongoose      = require('mongoose');
+const bodyParser    = require('body-parser');
+const ejs           = require('ejs');
 //...
 let Cart;
 
@@ -57,7 +59,7 @@ app.get('/', checkCart, function(req, res) {
 //     }
 // });
 
-app.get('/chillyPotato', (req, res)=> {
+app.get('/chillyPotato', checkCart, (req, res)=> {
     let product = {
         product_id : 2,
         title : "ChillyPotato",
@@ -81,7 +83,7 @@ app.get('/api/items', (req, res) => {
 
 });
 
-app.post('/api/cart', (req, res) => {
+app.post('/api/cart', checkCart, (req, res) => {
     let qty = parseInt(req.body.qty, 10);
     let product = parseInt(req.body.product_id, 10);
     if(qty > 0) {
@@ -98,7 +100,7 @@ app.post('/api/cart', (req, res) => {
     }
 });
 
-app.get('/api/cart', (req, res)=> {
+app.get('/api/cart', checkCart, (req, res)=> {
     res.send(Cart.data);
 
 });
