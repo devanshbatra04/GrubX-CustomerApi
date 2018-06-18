@@ -16,16 +16,20 @@ app.use(session({
     saveUninitialized: true,
     store: store,
     unset: 'destroy',
-    name: 'session cookie name'
+    name: 'CartCheck',
 }));
 
 app.get('/', function(req, res) {
     console.log(req.session);
+    if (!req.session.cart) {
+        req.session.cart = require('./lib/cart');
+    }
     if(!req.session.test) {
         req.session.test = 'OK';
         res.send('OK');
     }
     else res.send('still OK');
+
 });
 
 app.post('/test', (req, res) => {
