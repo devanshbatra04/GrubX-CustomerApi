@@ -10,6 +10,42 @@ const store = new MongoDBStore({
     uri: 'mongodb://localhost:27017/grubx',
     collection: 'sessions'
 });
+function assignCart(Cart){
+    Cart.addToCart = function (product = null, qty = 1) {
+        if(!this.inCart(product.product_id)) {
+            let prod = {
+                id: product.product_id,
+                title: product.title,
+                price: product.price,
+                qty: qty,
+            };
+            this.data.items.push(prod);
+            this.calculateTotals();
+        }
+    };
+    Cart.inCart = function(productID = 0) {
+        let found = false;
+        this.data.items.forEach(item => {
+            if(item.id === productID) {
+                found = true;
+            }
+        });
+        return found;
+    };
+    Cart.calculateTotals = function() {
+        this.data.totals = 0;
+        this.data.items.forEach(item => {
+            let price = item.price;
+            let qty = item.qty;
+            let amount = price * qty;
+
+            this.data.totals += amount;
+        });
+    }
+
+}
+
+
 
 app.use(session({
     secret: 'Dis ish Secretish',
@@ -25,14 +61,14 @@ let checkCart = function (req,res,next){
         req.session.cart = new cart();
     }
     Cart = req.session.cart;
+    if (!Cart.addToCart) assignCart(Cart);
+    console.log(Cart);
     next();
 };
 app.use(checkCart);
 
 app.get('/', checkCart, function(req, res) {
-    console.log(req.session);
-    if(!req.session.test) {
-        req.session.test = 'OK';
+    if(!req.session) {
         res.send('OK');
     }
     else res.send('still OK');
