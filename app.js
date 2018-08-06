@@ -116,5 +116,5 @@ app.post('/api/cart/empty', checkCart, (req, res)=> {
 });
 
 app.listen(3000, function () {
-    console.log('Ecommerce sample listening on port 3000!');
+    console.log('listening on port 3000!');
 });
