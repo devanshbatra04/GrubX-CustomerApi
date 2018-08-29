@@ -5,6 +5,7 @@ const Security      = require('./lib/security');
 const assignCart    = require('./lib/assigncart');
 const cart          = require('./lib/cart');
 const Product       = require('./models/products');
+const Offer       = require('./models/offers');
 const mongoose      = require('mongoose');
 const bodyParser    = require('body-parser');
 const ejs           = require('ejs');
@@ -19,6 +20,8 @@ const store = new MongoDBStore({
 mongoose.connect("mongodb://don123:don123@ds163700.mlab.com:63700/grubx");
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
 
 
 app.use(session({
@@ -115,6 +118,39 @@ app.post('/api/cart/empty', checkCart, (req, res)=> {
     res.redirect('/api/cart');
 });
 
+app.get("/api/offers", function(req, res){
+    Offer.find({}, function(err, offers){
+        if (err) res.send(err);
+        else{
+            res.send(offers);
+        }
+    })
+})
+
+app.get("*", function(req, res){
+    console.log("request");
+})
+
+app.post("/s", function(req, res){
+    console.log(req.body);
+    res.send(req.body)
+})
+
+
+
 app.listen(3000, function () {
     console.log('listening on port 3000!');
+    // Offer.create({
+    //     product_id: 100,
+    //     title: "Samosa with Coke",
+    //     description: "Samosa Coke Combo at Rs20",
+    //     Category: "Fast Food",
+    //     url: "https://s3-ap-southeast-1.amazonaws.com/harriken/images/post/2018/01/2018012811012425828Q5NZ.jpg",
+    //     rating: 5,
+    //     canteen: "testCanteen",
+    //     totalPrice: 20,
+    //     items: [{name: "Samosa", qty: 1, price:10}, {name: "Coke 350 ml", qty: 1, price:20}]
+    // }, function(err, created){
+    //     if (err) console.log(err);
+    // })
 });
