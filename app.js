@@ -136,15 +136,30 @@ app.get("/api/offers", function(req, res){
     })
 })
 
+////////////////////////////get items routes///////////////////////////////////
+app.get("/api/canteen/:canteen", function(req, res){
+    let a = {
+        "MiniZayca": miniZayca,
+        "Amul": Amul,
+        "JC": JC,
+        "McCain": McCain
+    }
+    let canteen = a[req.params.canteen];
+    let toFind
+    if (req.query.category){
+        toFind = {Category: req.query.category}
+    } else toFind = {};
+    canteen.find(toFind, function(err, products){
+        if (err) res.send(err);
+        else {
+            res.send(products);
+        }
+    })
+})
+
 app.get("*", function(req, res){
     console.log("request");
 })
-
-app.post("/s", function(req, res){
-    console.log(req.body);
-    res.send(req.body)
-})
-
 
 
 app.listen(3000, function () {
