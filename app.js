@@ -5,11 +5,17 @@ const Security      = require('./lib/security');
 const assignCart    = require('./lib/assigncart');
 const cart          = require('./lib/cart');
 const Product       = require('./models/products');
-const Offer       = require('./models/offers');
+const Offer         = require('./models/offers');
 const mongoose      = require('mongoose');
 const bodyParser    = require('body-parser');
 const ejs           = require('ejs');
 const miniZayca     = require('./models/MiniZayca');
+const JC            = require('./models/JC');
+const McCain        = require('./models/McCain');
+const Amul          = require('./models/Amul');
+
+
+
 //...
 let Cart;
 
