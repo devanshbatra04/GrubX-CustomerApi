@@ -9,8 +9,11 @@ const Offer       = require('./models/offers');
 const mongoose      = require('mongoose');
 const bodyParser    = require('body-parser');
 const ejs           = require('ejs');
+const miniZayca     = require('./models/MiniZayca');
 //...
 let Cart;
+
+
 
 const store = new MongoDBStore({
     uri: "mongodb://don123:don123@ds163700.mlab.com:63700/grubx",
@@ -140,17 +143,4 @@ app.post("/s", function(req, res){
 
 app.listen(3000, function () {
     console.log('listening on port 3000!');
-    // Offer.create({
-    //     product_id: 100,
-    //     title: "Samosa with Coke",
-    //     description: "Samosa Coke Combo at Rs20",
-    //     Category: "Fast Food",
-    //     url: "https://s3-ap-southeast-1.amazonaws.com/harriken/images/post/2018/01/2018012811012425828Q5NZ.jpg",
-    //     rating: 5,
-    //     canteen: "testCanteen",
-    //     totalPrice: 20,
-    //     items: [{name: "Samosa", qty: 1, price:10}, {name: "Coke 350 ml", qty: 1, price:20}]
-    // }, function(err, created){
-    //     if (err) console.log(err);
-    // })
 });
